@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Instrument+Serif:ital@0;1&family=Mouse+Memoirs&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Viaoda+Libre&display=swap');
+
+:root {
+    --color-background-page: #E7E5DF;
+    --color-background-header: #29524A;
+    --color-text-page: #000000;
+    --color-text-header: #FFFFFF;
+    --color-link: blue;
+    --color-link-visited: purple;
+    --font-family-serif: "Hammersmith One", Oswald, "Roboto Condensed", "Mouse Memoirs", Cambria, Georgia, serif;
+    --font-family-sans-serif: "Instrument Serif", "Viaoda Libre", Calibri, Arial, sans-serif;
+}
