@@ -1,17 +1,40 @@
-header {
+.page {
+    --page-grids: 5;
+    display: grid;
+    grid-template-columns: repeat(var(--page-grids), 1fr);
+    gap: 1rem;
+}
+
+@media screen and (max-width: 30rem) {
+    .page {
+        --page-grids: 1;
+    }
+}
+
+.page > header {
+    grid-column: 1 / end;
     display: flex;
     justify-content: space-between;
 }
 
-.product-list {
+.page > main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 0 1rem;
-    gap: 1rem;
-    align-items: baseline;
+    grid-column: 1 / end;
+    grid-template-columns: subgrid;
+
+    & > .product-title {
+        grid-column: 1 / end;
+        display: flex;
+        justify-content: center;
+    }
+
+    & > .product-list {
+        display: contents;
+        & > * {
+            grid-column: auto / span 1;
+            text-align: center;
+        }
+
+    }
 }
 
-.product-title {
-    display: flex;
-    justify-content: center;
-}
