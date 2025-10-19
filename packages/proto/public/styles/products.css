@@ -7,7 +7,7 @@
 
 @media screen and (max-width: 30rem) {
     .page {
-        --page-grids: 1;
+        --page-grids: 2;
     }
 }
 
@@ -19,22 +19,24 @@
 
 .page > main {
     display: grid;
-    grid-column: 1 / end;
+    grid-column: 1 / -1;
     grid-template-columns: subgrid;
 
     & > .product-title {
-        grid-column: 1 / end;
+        grid-column: 1 / -1;
         display: flex;
         justify-content: center;
     }
 
     & > .product-list {
-        display: contents;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+
         & > * {
-            grid-column: auto / span 1;
+            grid-column: span 1;
             text-align: center;
         }
-
     }
 }
 
