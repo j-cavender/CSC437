@@ -10,3 +10,11 @@
     --font-family-serif: "Hammersmith One", Oswald, "Roboto Condensed", "Mouse Memoirs", Cambria, Georgia, serif;
     --font-family-sans-serif: "Instrument Serif", "Viaoda Libre", Calibri, Arial, sans-serif;
 }
+
+body.dark-mode {
+    --color-background-page: #292929;
+    --color-text-page: #FFFFFF;
+    --color-link: #4A9EFF;
+    --color-link-visited: #BB86FC;
+
+}

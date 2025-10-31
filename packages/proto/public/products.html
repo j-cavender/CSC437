@@ -9,9 +9,30 @@
     <title>Products</title>
 </head>
 <body class="page">
+<script>
+    function toggleDarkMode (target, checked) {
+        const customEvent = new CustomEvent("dark-mode:toggle", {
+            bubbles: true,
+            detail: { checked },
+        });
+        target.dispatchEvent(customEvent);
+    }
+
+    document.body.addEventListener("dark-mode:toggle", (event) => {
+        const page = event.currentTarget;
+        const checked = event.detail.checked;
+        page.classList.toggle("dark-mode", checked);
+    });
+</script>
 <header>
     <h1>Products</h1>
     <section class="user-control">Cart - Sign In</section>
+    <label
+            onchange="event.stopPropagation();
+            toggleDarkMode(event.target, event.target.checked)">
+        <input type="checkbox" autocomplete="off" />
+        Dark Mode
+    </label>
 </header>
 <main>
     <section class="product-title">
