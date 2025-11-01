@@ -1,0 +1,64 @@
+{
+  "bowls": [
+    {
+      "itemId": "1",
+      "name": "Bowl",
+      "imgSrc": "../img/bowl1.png",
+      "alt": "ceramic bowl",
+      "width": "300"
+    },
+    {
+      "itemId": "2",
+      "name": "Bowl",
+      "imgSrc": "../img/bowl2.png",
+      "alt": "ceramic bowl",
+      "width": "300"
+    },
+    {
+      "itemId": "3",
+      "name": "Bowl",
+      "imgSrc": "../img/bowl3.png",
+      "alt": "ceramic bowl",
+      "width": "300"
+    },
+    {
+      "itemId": "4",
+      "name": "Bowl",
+      "imgSrc": "../img/bowl4.png",
+      "alt": "ceramic bowl",
+      "width": "300"
+    },
+    {
+      "itemId": "5",
+      "name": "Bowl",
+      "imgSrc": "../img/bowl4.png",
+      "alt": "ceramic bowl",
+      "width": "300"
+    }
+  ],
+  "teaSets": [
+    {
+      "itemId": "1",
+      "name": "Tea Set",
+      "imgSrc": "../img/teaset1.png",
+      "alt": "ceramic tea set",
+      "width": "300"
+    },
+    {
+      "itemId": "2",
+      "name": "Tea Set",
+      "imgSrc": "../img/teaset2.png",
+      "alt": "ceramic tea set",
+      "width": "300"
+    }
+  ],
+  "trinkets": [
+    {
+      "itemId": "1",
+      "name": "Trinket",
+      "imgSrc": "../img/trinket1.png",
+      "alt": "pottery container",
+      "width": "300"
+    }
+  ]
+}

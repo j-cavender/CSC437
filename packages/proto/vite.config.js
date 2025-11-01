@@ -4,9 +4,6 @@ import { defineConfig } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-console.log('Vite config loading!');
-console.log('Products path:', resolve(__dirname, 'products.html'));
-
 export default defineConfig({
     build: {
         rollupOptions: {

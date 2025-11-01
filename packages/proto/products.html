@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="public/styles/reset.css">
-    <link rel="stylesheet" href="public/styles/tokens.css">
-    <link rel="stylesheet" href="public/styles/page.css">
-    <link rel="stylesheet" href="public/styles/products.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/products.css">
     <meta charset="UTF-8">
     <title>Products</title>
     <script type="module">
         import { define } from "@calpoly/mustang";
         import { PotteryItemElement } from "/src/pottery-item.js";
+        import { PotteryListElement } from "/src/pottery-list.js";
 
         define({
-            "pottery-item": PotteryItemElement
+            "pottery-item": PotteryItemElement,
+            "pottery-list": PotteryListElement
         });
     </script>
 </head>
@@ -43,93 +45,7 @@
     </label>
 </header>
 <main>
-    <section class="product-title">
-        <h2>
-            <svg class="icon">
-                <use href="/icons/pottery.svg#icon-plates"/>
-            </svg>
-            Bowls
-        </h2>
-    </section>
-    <div class="product-list">
-        <pottery-item
-                item-id="1"
-                img-src="../img/bowl1.png"
-                alt="ceramic bowl"
-                width="300">
-            Bowl
-        </pottery-item>
-        <pottery-item
-                item-id="2"
-                img-src="../img/bowl2.png"
-                alt="ceramic bowl"
-                width="300">
-            Bowl
-        </pottery-item>
-        <pottery-item
-                item-id="3"
-                img-src="../img/bowl3.png"
-                alt="ceramic bowl"
-                width="300">
-            Bowl
-        </pottery-item>
-        <pottery-item
-                item-id="4"
-                img-src="../img/bowl4.png"
-                alt="ceramic bowl"
-                width="300">
-            Bowl
-        </pottery-item>
-        <pottery-item
-                item-id="5"
-                img-src="../img/bowl4.png"
-                alt="ceramic bowl"
-                width="300">
-            Bowl
-        </pottery-item>
-    </div>
-    <section class="product-title">
-        <h2>
-            <svg class="icon">
-                <use href="/icons/pottery.svg#icon-pottery3"/>
-            </svg>
-            Tea Set
-        </h2>
-    </section>
-
-    <div class="product-list">
-        <pottery-item
-                item-id="1"
-                img-src="../img/teaset1.png"
-                alt="ceramic tea set"
-                width="300">
-            Tea Set
-        </pottery-item>
-        <pottery-item
-                item-id="2"
-                img-src="../img/teaset2.png"
-                alt="ceramic tea set"
-                width="300">
-            Tea Set
-        </pottery-item>
-    </div>
-
-    <section class="product-title">
-        <h2>
-            <svg class="icon">
-                <use href="/icons/pottery.svg#icon-candles"/>
-            </svg>
-            Trinkets
-        </h2>
-    </section>
-    <div class="product-list">
-        <pottery-item
-                item-id="1"
-                img-src="../img/trinket1.png"
-                alt="pottery container">
-            Trinket
-        </pottery-item>
-    </div>
+    <pottery-list src="/data/products.json"></pottery-list>
     <a href="index.html">Return Home</a>
 </main>
 </body>
