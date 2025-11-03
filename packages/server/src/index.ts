@@ -1,5 +1,9 @@
 // src/index.ts
 import express, { Request, Response } from "express";
+import { connect } from "./services/mongo";
+import PotteryItem from "./services/potteryitem-svc";
+
+connect("cp-pottery"); // use your own db name here
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,6 +13,18 @@ app.use(express.static(staticDir));
 
 app.get("/hello", (req: Request, res: Response) => {
     res.send("Hello, World");
+});
+
+app.get("/potteryitem/:itemId", (req: Request, res: Response) => {
+    const {g itemId } = req.params;
+
+    PotteryItem.get(itemId).then((data) => {
+        if (data) res
+            .set("Content-Type", "application/json")
+            .send(JSON.stringify(data));
+        else res
+            .status(404).send();
+    });
 });
 
 app.listen(port, () => {
