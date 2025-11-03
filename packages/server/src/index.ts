@@ -16,7 +16,7 @@ app.get("/hello", (req: Request, res: Response) => {
 });
 
 app.get("/potteryitem/:itemId", (req: Request, res: Response) => {
-    const {g itemId } = req.params;
+    const { itemId } = req.params;
 
     PotteryItem.get(itemId).then((data) => {
         if (data) res
