@@ -31,4 +31,29 @@ function get(itemId: String): Promise<PotteryItem> {
         });
 }
 
-export default { index, get };
+function update(
+    itemId: String,
+    potteryitem: PotteryItem
+): Promise<PotteryItem> {
+    return PotteryItemModel.findOneAndUpdate({ itemId }, potteryitem, {
+        new: true
+    }).then((updated) => {
+        if (!updated) throw `${itemId} not updated`;
+        else return updated as PotteryItem;
+    });
+}
+
+function create(json: PotteryItem): Promise<PotteryItem> {
+    const t = new PotteryItemModel(json);
+    return t.save();
+}
+
+function remove(itemId: String): Promise<void> {
+    return PotteryItemModel.findOneAndDelete({ itemId }).then(
+        (deleted) => {
+            if (!deleted) throw `${itemId} not deleted`;
+        }
+    );
+}
+
+export default { index, get, create, update, remove };
