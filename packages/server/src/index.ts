@@ -4,6 +4,7 @@ import { connect } from "./services/mongo";
 import PotteryItem from "./services/potteryitem-svc";
 
 import potteryitems from "./routes/potteryitems";
+import auth, { authenticateUser } from "./routes/auth";
 
 connect("cp-pottery"); // use your own db name here
 
@@ -13,7 +14,8 @@ const staticDir = process.env.STATIC || "public";
 
 app.use(express.static(staticDir));
 app.use(express.json());
-app.use("/api/potteryitems", potteryitems);
+app.use("/api/potteryitems", authenticateUser, potteryitems);
+app.use("/auth", auth);
 
 app.get("/hello", (req: Request, res: Response) => {
     res.send("Hello, World");

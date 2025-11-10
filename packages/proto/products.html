@@ -8,45 +8,33 @@
     <meta charset="UTF-8">
     <title>Products</title>
     <script type="module">
-        import { define } from "@calpoly/mustang";
+        import { define, Auth } from "@calpoly/mustang";
         import { PotteryItemElement } from "/src/pottery-item.js";
         import { PotteryListElement } from "/src/pottery-list.js";
+        import { HeaderElement } from "/src/header-element.js";
 
         define({
             "pottery-item": PotteryItemElement,
-            "pottery-list": PotteryListElement
+            "pottery-list": PotteryListElement,
+            "header-element": HeaderElement,
+            "mu-auth": Auth.Provider
         });
     </script>
 </head>
 <body class="page">
 <script>
-    function toggleDarkMode (target, checked) {
-        const customEvent = new CustomEvent("dark-mode:toggle", {
-            bubbles: true,
-            detail: { checked },
-        });
-        target.dispatchEvent(customEvent);
-    }
-
     document.body.addEventListener("dark-mode:toggle", (event) => {
         const page = event.currentTarget;
         const checked = event.detail.checked;
         page.classList.toggle("dark-mode", checked);
     });
 </script>
-<header>
-    <h1>Products</h1>
-    <section class="user-control">Cart - Sign In</section>
-    <label
-            onchange="event.stopPropagation();
-            toggleDarkMode(event.target, event.target.checked)">
-        <input type="checkbox" autocomplete="off" />
-        Dark Mode
-    </label>
-</header>
-<main>
-    <pottery-list src="/data/products.json"></pottery-list>
-    <a href="index.html">Return Home</a>
-</main>
+    <mu-auth provides="pottery:auth">
+    <header-element page-title="Products"></header-element>
+    <main>
+        <pottery-list src="/data/products.json"></pottery-list>
+        <a href="index.html">Return Home</a>
+    </main>
+    </mu-auth>
 </body>
 </html>

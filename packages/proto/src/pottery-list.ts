@@ -1,5 +1,7 @@
-import { html, LitElement } from 'lit';
+import { html, css, LitElement } from 'lit';
 import { property, state } from "lit/decorators.js";
+import { Observer, Auth } from "@calpoly/mustang";
+import reset from "./styles/reset.css.ts";
 
 interface PotteryItem {
     itemId: string;
@@ -22,19 +24,36 @@ export class PotteryListElement extends LitElement {
     @state()
     trinkets: Array<PotteryItem> = [];
 
-    createRenderRoot() {
-        return this;
-    }
+    _authObserver = new Observer<Auth.Model>(this, "pottery:auth");
+    _user?: Auth.User;
 
     connectedCallback() {
         super.connectedCallback();
-        this.style.display = 'contents';
+
+        this._authObserver.observe((auth: Auth.Model) => {
+            this._user = auth.user;
+        });
+
         if (this.src) this.hydrate(this.src);
     }
 
+    get authorization() {
+        return (
+            this._user?.authenticated && {
+                Authorization:
+                    `Bearer ${(this._user as Auth.AuthenticatedUser).token}`
+            }
+        );
+    }
+
     hydrate(url: string) {
-        fetch(url)
-            .then(res => res.json())
+        fetch(url, { headers: this.authorization || {} })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then((json: object) => {
                 if (json) {
                     const products = json as {
@@ -46,6 +65,9 @@ export class PotteryListElement extends LitElement {
                     this.teaSets = products.teaSets;
                     this.trinkets = products.trinkets;
                 }
+            })
+            .catch((error) => {
+                console.error('Error fetching pottery data:', error);
             });
     }
 
@@ -103,4 +125,58 @@ export class PotteryListElement extends LitElement {
             </div>
         `;
     }
+
+    static styles = [
+        reset.styles,
+        css`
+            :host {
+                display: grid;
+                grid-column: 1 / -1;
+                grid-template-columns: subgrid;
+            }
+
+            h2 {
+                color: var(--color-text-page);
+                font-family: var(--font-family-serif);
+            }
+
+            .product-title {
+                grid-column: 1 / -1;
+                display: flex;
+                justify-content: center;
+            }
+
+            .product-list {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: subgrid;
+            }
+
+            .product-list > * {
+                grid-column: span 1;
+                text-align: center;
+            }
+
+            svg.icon {
+                display: inline;
+                height: 2em;
+                width: 2em;
+                vertical-align: top;
+                fill: currentColor;
+            }
+
+            a {
+                color: var(--color-link);
+            }
+
+            a:visited {
+                color: var(--color-link-visited);
+            }
+
+            a:hover {
+                text-decoration: underline;
+                text-underline-offset: 2px;
+            }
+        `
+    ];
 }

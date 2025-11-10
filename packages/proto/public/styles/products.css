@@ -11,13 +11,13 @@
     }
 }
 
-.page > header {
+.page > header-element {
     grid-column: 1 / end;
     display: flex;
     justify-content: space-between;
 }
 
-.page > main {
+.page main {
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;

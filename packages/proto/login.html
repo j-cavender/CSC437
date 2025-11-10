@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/page.css">
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <style>
+    main.card {
+      margin-top: 2rem;
+      padding: 2rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    login-form label {
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    login-form label span {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: bold;
+    }
+
+    login-form input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    login-form button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      background-color: var(--color-background-header);
+      color: var(--color-text-header);
+      border: none;
+      border-radius: 4px;
+    }
+
+    login-form button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
+  <script type="module">
+    import { define, Auth } from "@calpoly/mustang";
+    import { LoginFormElement } from "/src/auth/login-form";
+    import { HeaderElement } from "/src/header-element";
+
+    define({
+      "mu-auth": Auth.Provider,
+      "login-form": LoginFormElement,
+      "header-element": HeaderElement
+    });
+  </script>
+</head>
+<body class="page">
+<mu-auth provides="pottery:auth">
+  <script>
+    document.body.addEventListener("dark-mode:toggle", (event) => {
+      const page = event.currentTarget;
+      const checked = event.detail.checked;
+      page.classList.toggle("dark-mode", checked);
+    });
+  </script>
+
+  <header-element page-title="User Login"></header-element>
+
+  <main class="card">
+    <login-form api="/auth/login">
+      <label>
+        <span>Username:</span>
+        <input name="username" autocomplete="off" />
+      </label>
+      <label>
+        <span>Password:</span>
+        <input type="password" name="password" />
+      </label>
+    </login-form>
+  </main>
+  <p>
+    Or did you want to
+    <a href="newuser.html">Sign up as a new user</a>?
+  </p>
+</mu-auth>
+</body>
+</html>
