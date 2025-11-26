@@ -1,7 +1,7 @@
 import { html, css, LitElement } from 'lit';
 import { property, state } from "lit/decorators.js";
 import { Observer, Auth, Events } from "@calpoly/mustang";
-import reset from "./styles/reset.css";
+import reset from "../styles/reset.css";
 
 export class HeaderElement extends LitElement {
     @property({ type: String, attribute: 'page-title' })
