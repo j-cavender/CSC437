@@ -24,6 +24,7 @@
 <body class="page">
 <script>
     document.body.addEventListener("dark-mode:toggle", (event) => {
+
         const page = event.currentTarget;
         const checked = event.detail.checked;
         page.classList.toggle("dark-mode", checked);

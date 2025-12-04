@@ -67,4 +67,20 @@ function verify(username: string, password: string)
         );
 }
 
-export default { create, verify };
+function updatePassword(username: string, newPassword: string): Promise<void> {
+    return bcrypt
+        .genSalt(10)
+        .then((salt: string) => bcrypt.hash(newPassword, salt))
+        .then((hashedPassword: string) => {
+            return credentialModel.findOneAndUpdate(
+                { username },
+                { hashedPassword },
+                { new: true }
+            );
+        })
+        .then((updated) => {
+            if (!updated) throw `Failed to update password for ${username}`;
+        });
+}
+
+export default { create, verify, updatePassword };

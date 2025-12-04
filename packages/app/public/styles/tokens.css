@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Instrument+Serif:ital@0;1&family=Mouse+Memoirs&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Viaoda+Libre&display=swap');
+
+:root {
+    /* Color Tokens - Light Mode */
+    --color-background-page: #E7E5DF;
+    --color-background-header: #29524A;
+    --color-text-page: #000000;
+    --color-text-header: #FFFFFF;
+    --color-text-muted: #666666;
+    --color-accent: #29524A;
+    --color-link: blue;
+    --color-link-visited: purple;
+    --color-background-card: #ffffff;
+    --color-border: #d0d0d0;
+
+    /* Typography Tokens */
+    --font-family-serif: "Hammersmith One", Oswald, "Roboto Condensed", "Mouse Memoirs", Cambria, Georgia, serif;
+    --font-family-sans-serif: "Instrument Serif", "Viaoda Libre", Calibri, Arial, sans-serif;
+
+    /* Shadow Tokens - Light Mode */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode {
+    /* Color Tokens - Dark Mode */
+    --color-background-page: #1a1a1a;
+    --color-background-header: #1f3d38;
+    --color-text-page: #e8e8e8;
+    --color-text-header: #FFFFFF;
+    --color-text-muted: #a0a0a0;
+    --color-accent: #5DBEA3;
+    --color-link: #4A9EFF;
+    --color-link-visited: #BB86FC;
+    --color-background-card: #2a2a2a;
+    --color-border: #404040;
+
+    /* Shadow Tokens - Dark Mode */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+}
