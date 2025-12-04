@@ -5,17 +5,19 @@ import { PotteryItem } from "../models/potteryitem";
 const PotteryItemSchema = new Schema<PotteryItem>(
     {
         itemId: { type: String, required: true, trim: true },
-        category: { type: String, required: true, trim: true },
+        type: { type: String, required: true, trim: true },
         name: {type: String, required: true, trim: true },
         imgSrc: String,
         alt: String,
-        width: String
+        width: String,
+        price: Number,
+        description: String
     },
     { collection: "pottery_item" }
 );
 
 const PotteryItemModel = model<PotteryItem>(
-    "Profile",
+    "PotteryItem",
     PotteryItemSchema
 );
 

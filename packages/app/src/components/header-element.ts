@@ -1,14 +1,15 @@
-import { html, css, LitElement } from 'lit';
-import { property, state } from "lit/decorators.js";
-import { Observer, Auth, Events } from "@calpoly/mustang";
+import {html} from 'lit';
+import {property, state} from "lit/decorators.js";
+import {View, Observer, Auth, Events} from "@calpoly/mustang";
+import {Model} from "../model";
+import {Msg} from "../messages";
 import reset from "../styles/reset.css";
+import tokens from "../styles/tokens.css";
+import headerStyles from "../styles/header-element.css";
 
-export class HeaderElement extends LitElement {
-    @property({ type: String, attribute: 'page-title' })
+export class HeaderElement extends View<Model, Msg> {
+    @property({type: String, attribute: 'page-title'})
     pageTitle: string = "Products";
-
-    @state()
-    darkMode: boolean = false;
 
     @state()
     loggedIn = false;
@@ -16,38 +17,50 @@ export class HeaderElement extends LitElement {
     @state()
     userid?: string;
 
+    @state()
+    get displayName(): string | undefined {
+        return this.model.profile?.displayName;
+    }
+
+    @state()
+    get darkMode(): boolean {
+        return this.model.profile?.darkMode ?? false;
+    }
+
     _authObserver = new Observer<Auth.Model>(this, "pottery:auth");
+
+    constructor() {
+        super("pottery:model");
+    }
 
     connectedCallback() {
         super.connectedCallback();
 
         this._authObserver.observe((auth: Auth.Model) => {
-            const { user } = auth;
+            const {user} = auth;
             if (user && user.authenticated) {
                 this.loggedIn = true;
                 this.userid = user.username;
+                this.dispatchMessage(["profile/request", {userid: user.username}]);
             } else {
                 this.loggedIn = false;
                 this.userid = undefined;
+                document.body.classList.remove("dark-mode");
             }
         });
     }
 
-    handleDarkModeToggle(event: Event) {
-        const input = event.target as HTMLInputElement;
-        this.darkMode = input.checked;
-
-        const customEvent = new CustomEvent("dark-mode:toggle", {
-            bubbles: true,
-            composed: true,
-            detail: { checked: this.darkMode },
-        });
-        this.dispatchEvent(customEvent);
+    updated() {
+        if (this.darkMode) {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
     }
 
     renderSignInButton() {
         return html`
-            <a href="/login.html" class="auth-button">
+            <a href="/app/login" class="auth-button">
                 Sign In
             </a>
         `;
@@ -56,10 +69,10 @@ export class HeaderElement extends LitElement {
     renderSignOutButton() {
         return html`
             <button
-                class="auth-button"
-                @click=${(e: UIEvent) => {
-            Events.relay(e, "auth:message", ["auth/signout"])
-        }}
+                    class="auth-button"
+                    @click=${(e: UIEvent) => {
+                        Events.relay(e, "auth:message", ["auth/signout"])
+                    }}
             >
                 Sign Out
             </button>
@@ -67,23 +80,33 @@ export class HeaderElement extends LitElement {
     }
 
     render() {
+        void this.darkMode;
+
         return html`
             <header>
-                <h1>${this.pageTitle}</h1>
-                <div class="header-controls">
-                    <section class="user-control">
-                        <span class="user-greeting">
-                            Hello, ${this.userid || "guest"}
-                        </span>
-                        ${this.loggedIn ?
-                                this.renderSignOutButton() :
-                                this.renderSignInButton()
-                        }
-                    </section>
-                    <label @change=${this.handleDarkModeToggle}>
-                        <input type="checkbox" autocomplete="off" .checked=${this.darkMode} />
-                        Dark Mode
-                    </label>
+                <div class="header-inner">
+                    <h1>${this.pageTitle}</h1>
+
+                    <nav class="main-nav">
+                        <a href="/app" class="nav-link">Home</a>
+                        <a href="/app/products" class="nav-link">Products</a>
+                        ${this.loggedIn ? html`
+                            <a href="/app/cart" class="nav-link">Cart</a>
+                            <a href="/app/profile" class="nav-link">Profile</a>
+                        ` : ''}
+                    </nav>
+
+                    <div class="header-controls">
+                        <section class="user-control">
+                            <span class="user-greeting">
+                                Hello, ${this.displayName || this.userid || "guest"}
+                            </span>
+                            ${this.loggedIn ?
+                                    this.renderSignOutButton() :
+                                    this.renderSignInButton()
+                            }
+                        </section>
+                    </div>
                 </div>
             </header>
         `;
@@ -91,62 +114,7 @@ export class HeaderElement extends LitElement {
 
     static styles = [
         reset.styles,
-        css`
-            :host {
-                grid-column: 1 / -1;
-            }
-
-            header {
-                background-color: var(--color-background-header);
-                color: var(--color-text-header);
-                font-family: var(--font-family-sans-serif);
-                font-weight: bold;
-                font-size: large;
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 1rem;
-            }
-
-            .header-controls {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.5rem;
-            }
-
-            .user-control {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .user-greeting {
-                color: var(--color-text-header);
-            }
-
-            .auth-button {
-                background-color: transparent;
-                border: 1px solid var(--color-text-header);
-                color: var(--color-text-header);
-                padding: 0.25rem 0.75rem;
-                border-radius: 4px;
-                text-decoration: none;
-                font-size: 0.9rem;
-                transition: background-color 0.2s;
-            }
-
-            .auth-button:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-
-            button.auth-button {
-                cursor: pointer;
-            }
-
-            label {
-                cursor: pointer;
-            }
-        `
+        tokens.styles,
+        headerStyles.styles
     ];
 }
