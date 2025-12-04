@@ -19,6 +19,8 @@ import {CartViewElement} from "./views/cart-view.ts";
 import {PotteryItemElement} from "./components/pottery-item.ts";
 import {PotteryListElement} from "./components/pottery-list.ts";
 import {LoginFormElement} from "./auth/login-form.ts";
+import {SignupFormElement} from "./auth/signup-form.ts";
+import {SignupViewElement} from "./views/signup-view.ts";
 
 const routes = [
     {
@@ -64,6 +66,12 @@ const routes = [
         `
     },
     {
+        path: "/app/signup",
+        view: () => html`
+            <signup-view></signup-view>
+        `
+    },
+    {
         path: "/app",
         view: () => html`
             <home-view></home-view>
@@ -89,6 +97,8 @@ define({
     "pottery-item": PotteryItemElement,
     "pottery-list": PotteryListElement,
     "login-form": LoginFormElement,
+    "signup-form": SignupFormElement,
+    "signup-view": SignupViewElement,
     "mu-switch": class AppSwitch extends Switch.Element {
         constructor() {
             super(routes, "pottery:history", "pottery:auth");
